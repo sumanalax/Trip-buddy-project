@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Web Page</title>
+        <style>
+            .container {
+                width: 1000px;
+                margin-left:10px;
+            }
+            .box {
+                width: 395px;
+                height: 500px;
+                display: inline-block;
+                vertical-align:text-top;
+                padding: 20px;
+            }
+            label {
+                width: 80px;
+                display: inline-block;
+                padding-bottom: 5px;
+            }
+            label:after { content: ": " }
+            input {
+                border: 1px solid #888888;
+                vertical-align: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="box">
+                <h2>Welcome to Trip Buddy</h2>
+                <h3>Register</h3>
+                <form action="/register" method="post" id="login">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="first_name">First name</label>
+                        <input type="text" id="first_name" name="first_name">
+                    </div>                    
+                    <!--First NME:<input type="text" name="first_name"><br>-->
+                    
+                    <div class="form-group">
+                        <label for="last_name">Last name</label>
+                        <input type="text" id="last_name" name="last_name">
+                    </div>                    
+                    <!--Last NME: <input type="text" name="last_name"><br>-->
+                    <div class="form-group">
+                        <label for="e-mail">E-mail</label>
+                        <input type="email" id="e-mail" name="e-mail">
+                    </div>                    
+                    <!--E-mail     <input type="text" name="e-mail"><br>-->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password">
+                    </div>                    
+                    <!--Paasword   <input type="password" name="password"><br>-->
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password">
+                    </div>                    
+                    <!--Confirm    <input type="password" name="confirm_password"><br>
+                    password:  <br>-->
+                    <input type="submit" value="Register">
+                </form>
+            </div>
+
+            <div class="box">
+                <h3>Log In</h3>
+                <form action="/login" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="e-mail">E-mail</label>
+                        <input type="e-mail" id="e-mail" name="e-mail">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <input type="submit" value="Log In">       
+                </form>
+            </div>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags}}"{% endif %}>{{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        </div>
+    </body>
+</html>

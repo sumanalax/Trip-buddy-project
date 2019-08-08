@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Dashboard</title>
+    <style>
+        h3 {
+            font-family:Arial;
+        }
+        .table{
+            width: 1000px;
+            border: 1px solid black;
+            font-family: Arial;
+        }
+        th{
+            width: 1000px;
+            background: grey;
+            align-content: center;
+            font-family: Arial;
+        }
+        td{
+            margin-left:10px;
+            align-content: center;
+            font-family: Arial;
+        }
+    </style>
+</head>
+<body>
+    <h3>Welcome {{ request.session.first_name }}!</h3>
+    <a href="/logout">logout</a><br>
+    <a href="/addtrip">AddTrip</a>
+    {% if my_trips %}
+        <h3>My Trips</h3>
+        <table class="table">
+            <thead class="tableheader">
+                <th>Description</th>
+                <th>Travel Start Date</th>
+                <th>Travel End Date</th>
+                <th>Plan</th>
+                <th>Action</th>
+            </thead>
+            {% for my_trip in my_trips %}
+                <tr>
+                    <td><a href="/viewtrip/{{ my_trip.id }}">{{ my_trip.destination }}</a></td>
+                    <td>{{ my_trip.travel_date_from }}</td>
+                    <td>{{ my_trip.travel_date_to }}</td>
+                    <td>{{ my_trip.description }}</td>
+                    <td><a href="/canceltrip/{{ my_trip.id }}">Cancel</a>
+                        <a href="/deletetrip/{{ my_trip.id }}">Delete</a>
+                    </td>
+                </tr>
+            {%endfor%}
+        </table>
+    {%endif%}
+    {% if other_trips %}
+        <h3>Other User's Travel Plans</h3>
+        <table class="table">
+        <thead class="tableheader">
+            <th>Name</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Do you want to Join?</th>
+        </thead>
+        {% for other_trip in other_trips %}
+            {% if my_trips %}
+                {% for my_trip in my_trips %}
+                    {% if my_trip.destination != other_trip.destination %}
+                    <tr>
+                        <td><a href="/viewtrip/{{ other_trip.id }}">{{ other_trip.destination }}</a></td>
+                        <td>{{ other_trip.travel_date_from }}</td>
+                        <td>{{ other_trip.travel_date_to }}</td>
+                        <td><a href="/jointrip/{{ other_trip.id }}">Join</a>
+                        </td>
+                    </tr>
+                    {%endif%}
+                {%endfor%}
+            {%else%}
+                <tr>
+                    <td><a href="/viewtrip/{{ other_trip.id }}">{{ other_trip.destination }}</a></td>
+                    <td>{{ other_trip.travel_date_from }}</td>
+                    <td>{{ other_trip.travel_date_to }}</td>
+                    <td><a href="/jointrip/{{ other_trip.id }}">Join</a>
+                    </td>
+                </tr>
+            {%endif%}
+        {%endfor%}
+    {%endif%}
+    
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add a job</title>
+    <style>
+        h3 {
+            font-family:Arial;
+        }
+        a {
+            font-family:Arial;
+            display: inline-block;
+        }
+        div {
+            padding-top: 2px;
+            font-family: Arial;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Add a Job</h3>
+    <a href="{{request.META.HTTP_REFERER}}">Back</a>
+    <a href="logout">logout</a>
+    <form action="/savetrip" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="destination">Destination</label>
+            <input type="text" name="destination">
+        </div>                    
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" name="description">
+        </div>                    
+        <div class="form-group">
+            <label for="travel_date_from">Travel Date From</label>
+            <input type="date" name="travel_date_from">
+        </div>                    
+        <div class="form-group">
+            <label for="travel_date_to">Travel Date To</label>
+            <input type="date" name="travel_date_to">
+        </div> 
+        <div class="form-group">
+                <input type="hidden" name="user_id" value ={{ request.session.user_id }}>
+            </div> 
+                <input type="submit" submit="submit">
+    </form>
+    
+</body>
+</html>
